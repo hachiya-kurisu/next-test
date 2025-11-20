@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
+import { useQuery, useApolloClient } from '@apollo/client/react';
 import { GetHomeScreensDocument } from '@/lib/graphql/generated/graphql';
 import { HomeScreen } from '@/lib/graphql/types';
 import { PageWithRefresh } from '@/app/components/ui/PageWithRefresh';
@@ -8,7 +8,7 @@ import { HomeScreenSkeleton } from '@/app/components/ui/HomeScreenSkeleton';
 import ErrorState from '@/app/components/ui/ErrorState';
 import CategorySection from '@/app/components/features/CategorySection';
 import Heading from '@/app/components/ui/Heading';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   useEffect(() => {
@@ -17,7 +17,6 @@ export default function Home() {
 
   const { data, loading, error, refetch } = useQuery(GetHomeScreensDocument, {
     fetchPolicy: 'cache-first',
-    nextFetchPolicy: 'cache-first',
   });
 
   const handleRefresh = async () => {
@@ -27,8 +26,6 @@ export default function Home() {
   return (
     <PageWithRefresh onRefresh={handleRefresh}>
       <Heading>SAMANSA</Heading>
-
-      {loading && <HomeScreenSkeleton />}
 
       {error && (
         <ErrorState

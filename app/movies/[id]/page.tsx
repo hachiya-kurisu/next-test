@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { GetOriginalVideoDocument, GetVideoCommentsDocument } from '@/lib/graphql/generated/graphql';
 import { PageWithRefresh } from '@/app/components/ui/PageWithRefresh';
 import { ErrorPage } from '@/app/components/ui/ErrorPage';
@@ -18,7 +18,6 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
     {
       variables: { id: unwrappedParams.id },
       fetchPolicy: 'cache-first',
-      nextFetchPolicy: 'cache-first',
     }
   );
 
@@ -43,7 +42,7 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
     ]);
   };
 
-  if (videoLoading) {
+  if (!videoData && !videoError) {
     return (
       <PageWithRefresh onRefresh={handleRefresh}>
         <BackLink />

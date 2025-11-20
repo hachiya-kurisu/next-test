@@ -8,7 +8,7 @@ type PrefetchOptions = {
 
 export function usePrefetch({ href, delay = 200 }: PrefetchOptions) {
   const router = useRouter();
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const onEnter = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);

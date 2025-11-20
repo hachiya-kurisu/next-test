@@ -1,6 +1,6 @@
 'use client';
 
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient } from '@apollo/client/react';
 import PrefetchLink from '../ui/PrefetchLink';
 import Heading from '../ui/Heading';
 import Image from 'next/image';

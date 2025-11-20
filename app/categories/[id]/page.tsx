@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { GetCategoryDocument } from '@/lib/graphql/generated/graphql';
 import { PageWithRefresh } from '@/app/components/ui/PageWithRefresh';
 import { ErrorPage } from '@/app/components/ui/ErrorPage';
@@ -16,7 +16,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   const { data, loading, error, refetch } = useQuery(GetCategoryDocument, {
     variables: { id: unwrappedParams.id },
     fetchPolicy: 'cache-first',
-    nextFetchPolicy: 'cache-first',
   });
 
   React.useEffect(() => {
@@ -29,7 +28,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
     await refetch();
   };
 
-  if (loading) {
+  if (!data && !error) {
     return (
       <PageWithRefresh onRefresh={handleRefresh}>
         <BackLink />

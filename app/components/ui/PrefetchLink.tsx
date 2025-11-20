@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ComponentProps, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { usePrefetch } from '@/app/hooks/usePrefetch';
 
 type PrefetchLinkProps = ComponentProps<typeof Link>;
@@ -10,8 +11,10 @@ export default function PrefetchLink({
   href,
   onMouseEnter,
   onMouseLeave,
+  onClick,
   ...props
 }: PrefetchLinkProps) {
+  const router = useRouter();
   const hrefString = typeof href === 'string' ? href : href.pathname || '';
   const { onEnter, onLeave } = usePrefetch({ href: hrefString });
 
@@ -31,11 +34,19 @@ export default function PrefetchLink({
     [onLeave, onMouseLeave]
   );
 
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      onClick?.(e);
+    },
+    [onClick]
+  );
+
   return (
     <Link
       href={href}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       {...props}
     />
   );

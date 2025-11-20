@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useApolloClient } from '@apollo/client';
+import { useApolloClient } from '@apollo/client/react';
 import PrefetchLink from '../ui/PrefetchLink';
 import LazyVideoGrid from './LazyVideoGrid';
 import Heading from '../ui/Heading';

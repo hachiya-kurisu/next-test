@@ -1,38 +1,25 @@
 'use client';
 
-import { useQuery, useApolloClient } from '@apollo/client/react';
+import { useQuery } from '@apollo/client/react';
 import { GetHomeScreensDocument } from '@/lib/graphql/generated/graphql';
 import { HomeScreen } from '@/lib/graphql/types';
-import { PageWithRefresh } from '@/app/components/ui/PageWithRefresh';
-import { HomeScreenSkeleton } from '@/app/components/ui/HomeScreenSkeleton';
-import ErrorState from '@/app/components/ui/ErrorState';
 import CategorySection from '@/app/components/features/CategorySection';
 import Heading from '@/app/components/ui/Heading';
-import { useEffect, useState } from 'react';
+import PageContainer from '@/app/components/ui/PageContainer';
+import { useEffect } from 'react';
 
 export default function Home() {
   useEffect(() => {
     document.title = 'ホーム | SAMANSA';
   }, []);
 
-  const { data, loading, error, refetch } = useQuery(GetHomeScreensDocument, {
+  const { data } = useQuery(GetHomeScreensDocument, {
     fetchPolicy: 'cache-first',
   });
 
-  const handleRefresh = async () => {
-    await refetch();
-  };
-
   return (
-    <PageWithRefresh onRefresh={handleRefresh}>
+    <PageContainer>
       <Heading>SAMANSA</Heading>
-
-      {error && (
-        <ErrorState
-          message={error.message}
-          onRetry={() => refetch()}
-        />
-      )}
 
       {data?.homeScreens && (
         <section className="space-y-16">
@@ -45,11 +32,11 @@ export default function Home() {
                 categoryName={screen.category!.name!}
                 videos={screen.videos || []}
                 index={index}
-                prioritizeFirst={index === 0 ? 4 : 0}
+                prioritizeFirst={index === 0 ? 12 : 0}
               />
             ))}
         </section>
       )}
-    </PageWithRefresh>
+    </PageContainer>
   );
 }

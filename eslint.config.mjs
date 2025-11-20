@@ -43,6 +43,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react-hooks/set-state-in-effect': 'off',
+      '@next/next/no-img-element': 'off',
     },
     settings: {
       react: {

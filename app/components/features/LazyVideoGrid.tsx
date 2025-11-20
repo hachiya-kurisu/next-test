@@ -20,11 +20,15 @@ export default function LazyVideoGrid({
   prioritizeFirst = 0,
   onEmpty
 }: LazyVideoGridProps) {
-  const [shouldRender, setShouldRender] = useState(false);
+  // if videos are already available (cached), render immediately
+  const [shouldRender, setShouldRender] = useState(videos.length > 0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // detect when component is visible
   useEffect(() => {
+    // skip observer if already rendering
+    if (shouldRender) return;
+
     const currentRef = containerRef.current;
     const observer = new IntersectionObserver(
       (entries) => {

@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { ComponentProps, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import { usePrefetch } from '@/app/hooks/usePrefetch';
 
 type PrefetchLinkProps = ComponentProps<typeof Link>;
@@ -14,7 +13,6 @@ export default function PrefetchLink({
   onClick,
   ...props
 }: PrefetchLinkProps) {
-  const router = useRouter();
   const hrefString = typeof href === 'string' ? href : href.pathname || '';
   const { onEnter, onLeave } = usePrefetch({ href: hrefString });
 

@@ -1,5 +1,4 @@
 import DurationBadge from '../ui/DurationBadge';
-import Image from 'next/image';
 import Heading from '../ui/Heading';
 import { GetOriginalVideoQuery } from '@/lib/graphql/generated/graphql';
 
@@ -12,12 +11,12 @@ export default function VideoDetails({ video }: VideoDetailsProps) {
     <article className="flex-1">
       {video.landscapeThumbnail && (
         <figure className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden mb-8 shadow-md">
-          <Image
+          <img
             src={video.landscapeThumbnail}
             alt={video.title || '動画サムネイル'}
-            fill
-            sizes="(max-width: 1024px) 100vw, 66vw"
-            className="object-cover"
+            width={1280}
+            height={720}
+            className="w-full h-full object-cover"
           />
         </figure>
       )}

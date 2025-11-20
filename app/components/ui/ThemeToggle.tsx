@@ -2,7 +2,6 @@
 
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 // toggles between light and dark mode
 export default function ThemeToggle() {
@@ -17,7 +16,7 @@ export default function ThemeToggle() {
     // avoid flash
     return (
       <div className="w-10 h-10 rounded-lg bg-surface border border-border flex items-center justify-center shadow-sm">
-        <Image
+        <img
           src="/icons/sun-placeholder.svg"
           alt="Loading"
           width={20}
@@ -37,7 +36,7 @@ export default function ThemeToggle() {
       aria-label="Toggle theme"
     >
       {isDark ? (
-        <Image
+        <img
           src="/icons/moon.svg"
           alt="Dark mode"
           width={20}
@@ -45,7 +44,7 @@ export default function ThemeToggle() {
           className="text-accent transition-transform duration-300 group-hover:rotate-12"
         />
       ) : (
-        <Image
+        <img
           src="/icons/sun.svg"
           alt="Light mode"
           width={20}

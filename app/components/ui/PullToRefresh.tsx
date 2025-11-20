@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 interface PullToRefreshIndicatorProps {
   pullDist: number;
   refreshing: boolean;
@@ -33,7 +31,7 @@ export default function PullToRefreshIndicator({
               transform: `rotate(${progress * 180}deg)`,
             }}
           >
-            <Image
+            <img
               src="/icons/refresh.svg"
               alt="Pull to refresh"
               width={24}

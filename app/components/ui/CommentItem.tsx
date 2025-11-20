@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Comment } from '@/lib/graphql/types';
 
 interface CommentItemProps {
@@ -39,7 +38,7 @@ export default function CommentItem({
     <article className="border-b border-border pb-5 last:border-0">
       <header className="flex items-start gap-3">
         {user?.avatar && (
-          <Image
+          <img
             src={user.avatar}
             alt={user.name || 'ユーザーアバター'}
             width={40}

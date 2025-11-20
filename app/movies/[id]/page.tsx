@@ -13,7 +13,7 @@ import Heading from '@/app/components/ui/Heading';
 
 export default function MoviePage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = React.use(params);
-  const { data: videoData, loading: videoLoading, error: videoError, refetch: refetchVideo } = useQuery(
+  const { data: videoData, error: videoError, refetch: refetchVideo } = useQuery(
     GetOriginalVideoDocument,
     {
       variables: { id: unwrappedParams.id },

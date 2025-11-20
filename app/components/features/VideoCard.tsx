@@ -3,7 +3,6 @@
 import { useApolloClient } from '@apollo/client/react';
 import PrefetchLink from '../ui/PrefetchLink';
 import Heading from '../ui/Heading';
-import Image from 'next/image';
 import { TimeBadge } from '../ui/TimeBadge';
 import { usePrefetch } from '@/app/hooks/usePrefetch';
 import { GetOriginalVideoDocument, GetVideoCommentsDocument } from '@/lib/graphql/generated/graphql';
@@ -60,13 +59,13 @@ export default function VideoCard({
     >
       <figure className="relative aspect-video bg-gray-100 rounded-lg overflow-hidden mb-3 border border-transparent group-hover:border-accent transition-all shadow-sm group-hover:shadow-lg">
         {landscapeThumbnail && (
-          <Image
+          <img
             src={landscapeThumbnail}
             alt={title || '動画サムネイル'}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform ease-out"
-            priority={priority}
+            width={640}
+            height={360}
+            loading={priority ? 'eager' : 'lazy'}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform ease-out"
           />
         )}
 

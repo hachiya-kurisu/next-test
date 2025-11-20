@@ -13,7 +13,7 @@ import Heading from '@/app/components/ui/Heading';
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = React.use(params);
-  const { data, loading, error, refetch } = useQuery(GetCategoryDocument, {
+  const { data, error, refetch } = useQuery(GetCategoryDocument, {
     variables: { id: unwrappedParams.id },
     fetchPolicy: 'cache-first',
   });

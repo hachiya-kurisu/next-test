@@ -12,7 +12,7 @@ export default function PageContainer({ children }: PageContainerProps) {
         <ThemeToggle />
       </header>
       <div className="min-h-screen p-8 md:p-12 lg:p-16">
-        <main className="max-w-7xl mx-auto fade-in">{children}</main>
+        <main className="max-w-7xl mx-auto">{children}</main>
       </div>
     </>
   )

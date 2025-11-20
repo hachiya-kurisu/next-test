@@ -1,26 +1,150 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-primary: #2D3748;
+  --color-secondary: #4A5568;
+  --color-accent: #6366F1;
+  --color-accent-hover: #4F46E5;
+  --color-background: #F9FAFB;
+  --color-surface: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+
+  /* shimmer colors */
+  --shimmer-start: #f0f0f0;
+  --shimmer-middle: #f8f8f8;
+  --shimmer-end: #f0f0f0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+.dark {
+  --color-primary: #F1F5F9;
+  --color-secondary: #CBD5E1;
+  --color-accent: #818CF8;
+  --color-accent-hover: #A5B4FC;
+  --color-background: #0F172A;
+  --color-surface: #1E293B;
+  --color-border: #334155;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+
+  --shimmer-start: #1e293b;
+  --shimmer-middle: #334155;
+  --shimmer-end: #1e293b;
+}
+
+@theme {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+  --color-overlay: var(--color-overlay);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+
+a {
+  transition: color 300ms ease-out, opacity 300ms ease-out;
+}
+
+button {
+  transition: background-color 300ms ease-out, color 300ms ease-out, opacity 300ms ease-out, border-color 300ms ease-out;
+}
+
+/* shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    90deg,
+    var(--shimmer-start) 0px,
+    var(--shimmer-middle) 40px,
+    var(--shimmer-end) 80px
+  );
+  background-size: 1000px 100%;
+}
+
+/* fade-in for pages */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 400ms ease-out;
+}
+
+/* fade-in for list items */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* carousel masking */
+.carousel-mask {
+  margin-left: -3rem;
+  margin-right: -3rem;
+  mask-image: linear-gradient(to right, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0px, black 3rem, black calc(100% - 3rem), transparent 100%);
+}
+
+.carousel-padding {
+  padding-left: 3rem;
+  padding-right: 3rem;
 }

@@ -1,6 +1,10 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+
+const link = new HttpLink({
+  uri: 'https://develop.api.samansa.com/graphql',
+});
 
 export const client = new ApolloClient({
-  uri: 'https://develop.api.samansa.com/graphql',
+  link,
   cache: new InMemoryCache(),
 });

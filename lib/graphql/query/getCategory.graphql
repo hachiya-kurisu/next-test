@@ -2,6 +2,7 @@ query getCategory($id: ID!) {
   category(id: $id) {
     id
     name
+    rankable
     videos {
       id
       title

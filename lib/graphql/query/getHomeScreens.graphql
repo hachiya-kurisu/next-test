@@ -4,6 +4,7 @@ query getHomeScreens {
     category {
       id
       name
+      rankable
     }
     videos {
       id

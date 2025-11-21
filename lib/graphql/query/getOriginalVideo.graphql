@@ -8,5 +8,10 @@ query getOriginalVideo($id: ID!) {
       minutes
       seconds
     }
+    creator {
+      id
+      name
+      avatar
+    }
   }
 }

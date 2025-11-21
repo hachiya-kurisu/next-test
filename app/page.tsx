@@ -33,6 +33,7 @@ export default function Home() {
                 videos={screen.videos || []}
                 index={index}
                 prioritizeFirst={index === 0 ? 12 : 0}
+                isRankable={screen.category?.rankable}
               />
             ))}
         </section>

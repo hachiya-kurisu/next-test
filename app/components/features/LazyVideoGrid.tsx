@@ -11,6 +11,7 @@ interface LazyVideoGridProps {
   layout?: 'horizontal' | 'grid';
   prioritizeFirst?: number;
   onEmpty?: () => void;
+  isRankable?: boolean;
 }
 
 // lazy renders category videos
@@ -18,7 +19,8 @@ export default function LazyVideoGrid({
   videos,
   layout = 'horizontal',
   prioritizeFirst = 0,
-  onEmpty
+  onEmpty,
+  isRankable = false
 }: LazyVideoGridProps) {
   // if videos are already available (cached), render immediately
   const [shouldRender, setShouldRender] = useState(videos.length > 0);
@@ -75,6 +77,7 @@ export default function LazyVideoGrid({
         prioritizeFirst={prioritizeFirst}
         isLoading={!shouldRender}
         skeletonCount={layout === 'horizontal' ? 6 : 8}
+        isRankable={isRankable}
       />
     </div>
   );

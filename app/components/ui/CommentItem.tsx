@@ -1,4 +1,5 @@
 import { Comment } from '@/lib/graphql/types';
+import { HeartIcon } from './HeartIcon';
 
 interface CommentItemProps {
   user?: Comment['user'];
@@ -54,7 +55,7 @@ export default function CommentItem({
           <footer className="flex items-center gap-4 mt-2.5 text-xs text-secondary">
             <span>{createdAt ? getRelativeTime(createdAt) : ''}</span>
             <span className="flex items-center gap-1">
-              <span> </span>
+              <HeartIcon size={14} />
               <span>{likeNum ?? 0}</span>
             </span>
           </footer>

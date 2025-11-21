@@ -4,6 +4,7 @@ import { useApolloClient } from '@apollo/client/react';
 import PrefetchLink from '../ui/PrefetchLink';
 import Heading from '../ui/Heading';
 import { TimeBadge } from '../ui/TimeBadge';
+import { RankBadge } from '../ui/RankBadge';
 import { usePrefetch } from '@/app/hooks/usePrefetch';
 import { GetOriginalVideoDocument, GetVideoCommentsDocument } from '@/lib/graphql/generated/graphql';
 import { Video } from '@/lib/graphql/types';
@@ -16,6 +17,7 @@ interface VideoCardProps {
   href: string;
   className?: string;
   priority?: boolean;
+  rank?: number;
 }
 
 export default function VideoCard({
@@ -24,7 +26,8 @@ export default function VideoCard({
   duration,
   href,
   className = '',
-  priority = false
+  priority = false,
+  rank
 }: VideoCardProps) {
   const client = useApolloClient();
   const videoId = href.split('/').pop();
@@ -71,6 +74,7 @@ export default function VideoCard({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         {duration && <TimeBadge minutes={duration.minutes} seconds={duration.seconds} />}
+        {rank && <RankBadge rank={rank} />}
       </figure>
 
       <Heading

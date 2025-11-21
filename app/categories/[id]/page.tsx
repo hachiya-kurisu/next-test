@@ -55,7 +55,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       <BackLink />
       <Heading size="lg">{category?.name}</Heading>
       {hasVideos ? (
-        <VideoGrid videos={category.videos ?? []} layout="grid" prioritizeFirst={8} />
+        <VideoGrid videos={category.videos ?? []} layout="grid" prioritizeFirst={8} isRankable={category?.rankable} />
       ) : (
         <EmptyState message="このカテゴリにはまだ動画がありません" icon="🎬" />
       )}

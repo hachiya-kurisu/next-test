@@ -16,6 +16,7 @@ interface CategorySectionProps {
   videos: Video[];
   prioritizeFirst?: number;
   index: number;
+  isRankable?: boolean;
 }
 
 // category header and lazy-loaded video grid
@@ -24,6 +25,7 @@ export default function CategorySection({
   categoryName,
   videos,
   prioritizeFirst = 0,
+  isRankable = false,
 }: CategorySectionProps) {
   const [isEmpty, setIsEmpty] = useState(false);
   const client = useApolloClient();
@@ -64,6 +66,7 @@ export default function CategorySection({
         layout="horizontal"
         prioritizeFirst={prioritizeFirst}
         onEmpty={() => setIsEmpty(true)}
+        isRankable={isRankable}
       />
     </section>
   );

@@ -11,6 +11,7 @@ interface VideoGridProps {
   prioritizeFirst?: number;
   isLoading?: boolean;
   skeletonCount?: number;
+  isRankable?: boolean;
 }
 
 export function VideoGrid({
@@ -18,7 +19,8 @@ export function VideoGrid({
   layout = 'grid',
   prioritizeFirst = 0,
   isLoading = false,
-  skeletonCount = 8
+  skeletonCount = 8,
+  isRankable = false
 }: VideoGridProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -61,6 +63,7 @@ export function VideoGrid({
                     href={`/movies/${video.id}`}
                     className="flex-shrink-0 w-64"
                     priority={index < prioritizeFirst}
+                    rank={isRankable ? index + 1 : undefined}
                   />
                 ))}
           </div>
@@ -84,6 +87,7 @@ export function VideoGrid({
                 duration={video.duration}
                 href={`/movies/${video.id}`}
                 priority={index < prioritizeFirst}
+                rank={isRankable ? index + 1 : undefined}
               />
             ))}
       </div>

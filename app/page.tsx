@@ -4,14 +4,18 @@ import { useQuery } from '@apollo/client/react';
 import { GetHomeScreensDocument } from '@/lib/graphql/generated/graphql';
 import { HomeScreen } from '@/lib/graphql/types';
 import CategorySection from '@/app/components/features/CategorySection';
-import Heading from '@/app/components/ui/Heading';
 import PageContainer from '@/app/components/ui/PageContainer';
+import { useBreadcrumb } from '@/app/contexts/BreadcrumbContext';
 import { useEffect } from 'react';
 
 export default function Home() {
+  const { setSegments, setLoading } = useBreadcrumb();
+
   useEffect(() => {
     document.title = 'ホーム | SAMANSA';
-  }, []);
+    setSegments([{ label: 'ショートフィルム' }]);
+    setLoading(false);
+  }, [setSegments, setLoading]);
 
   const { data } = useQuery(GetHomeScreensDocument, {
     fetchPolicy: 'cache-first',
@@ -19,8 +23,6 @@ export default function Home() {
 
   return (
     <PageContainer>
-      <Heading>SAMANSA</Heading>
-
       {data?.homeScreens && (
         <section className="space-y-16">
           {data.homeScreens

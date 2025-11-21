@@ -12,7 +12,7 @@ interface HeadingProps {
 
 const sizeClasses: Record<Size, string> = {
   xl: 'text-5xl mb-16',
-  lg: 'text-4xl mb-12',
+  lg: 'text-3xl mb-10',
   md: 'text-2xl mb-6',
   sm: 'text-xl mb-4',
 };

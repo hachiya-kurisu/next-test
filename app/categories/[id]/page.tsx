@@ -6,13 +6,14 @@ import { GetCategoryDocument } from '@/lib/graphql/generated/graphql';
 import { PageWithRefresh } from '@/app/components/ui/PageWithRefresh';
 import { ErrorPage } from '@/app/components/ui/ErrorPage';
 import { CategorySkeleton } from '@/app/components/ui/CategorySkeleton';
-import BackLink from '@/app/components/ui/BackLink';
+import { useBreadcrumb } from '@/app/contexts/BreadcrumbContext';
 import VideoGrid from '@/app/components/features/VideoGrid';
 import EmptyState from '@/app/components/ui/EmptyState';
 import Heading from '@/app/components/ui/Heading';
 
 export default function CategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = React.use(params);
+  const { setSegments, setLoading } = useBreadcrumb();
   const { data, error, refetch } = useQuery(GetCategoryDocument, {
     variables: { id: unwrappedParams.id },
     fetchPolicy: 'cache-first',
@@ -21,8 +22,16 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   React.useEffect(() => {
     if (data?.category?.name) {
       document.title = `${data.category.name} | SAMANSA`;
+      setSegments([
+        { label: 'ホーム', href: '/' },
+        { label: data.category.name }
+      ]);
+      setLoading(false);
+    } else if (!error) {
+      setLoading(true);
     }
-  }, [data?.category?.name]);
+    return () => setSegments([{ label: 'ショートフィルム' }]);
+  }, [data?.category?.name, setSegments, setLoading, error]);
 
   const handleRefresh = async () => {
     await refetch();
@@ -31,7 +40,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
   if (!data && !error) {
     return (
       <PageWithRefresh onRefresh={handleRefresh}>
-        <BackLink />
         <CategorySkeleton />
       </PageWithRefresh>
     );
@@ -42,7 +50,6 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
       <ErrorPage
         title="カテゴリが見つかりません"
         description={error.message}
-        backLink={<BackLink />}
       />
     );
   }
@@ -52,8 +59,7 @@ export default function CategoryPage({ params }: { params: Promise<{ id: string 
 
   return (
     <PageWithRefresh onRefresh={handleRefresh}>
-      <BackLink />
-      <Heading size="lg">{category?.name}</Heading>
+      <Heading level="h2" className="mb-0">{category?.name}</Heading>
       {hasVideos ? (
         <VideoGrid videos={category.videos ?? []} layout="grid" prioritizeFirst={8} isRankable={category?.rankable} />
       ) : (

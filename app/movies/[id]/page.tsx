@@ -6,13 +6,14 @@ import { GetOriginalVideoDocument, GetVideoCommentsDocument } from '@/lib/graphq
 import { PageWithRefresh } from '@/app/components/ui/PageWithRefresh';
 import { ErrorPage } from '@/app/components/ui/ErrorPage';
 import { VideoDetailSkeleton } from '@/app/components/ui/VideoDetailSkeleton';
-import BackLink from '@/app/components/ui/BackLink';
+import { useBreadcrumb } from '@/app/contexts/BreadcrumbContext';
 import VideoDetails from '@/app/components/features/VideoDetails';
 import CommentsList from '@/app/components/features/CommentsList';
 import Heading from '@/app/components/ui/Heading';
 
 export default function MoviePage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = React.use(params);
+  const { setSegments, setLoading } = useBreadcrumb();
   const { data: videoData, error: videoError, refetch: refetchVideo } = useQuery(
     GetOriginalVideoDocument,
     {
@@ -24,8 +25,19 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
   React.useEffect(() => {
     if (videoData?.originalVideo?.title) {
       document.title = `${videoData.originalVideo.title} | SAMANSA`;
+
+      const firstCategory = videoData.originalVideo.categories?.[0];
+      setSegments([
+        { label: 'ホーム', href: '/' },
+        ...(firstCategory?.name && firstCategory?.id ? [{ label: firstCategory.name, href: `/categories/${firstCategory.id}` }] : []),
+        { label: videoData.originalVideo.title }
+      ]);
+      setLoading(false);
+    } else if (!videoError) {
+      setLoading(true);
     }
-  }, [videoData?.originalVideo?.title]);
+    return () => setSegments([{ label: 'ショートフィルム' }]);
+  }, [videoData?.originalVideo?.title, videoData?.originalVideo?.categories, setSegments, setLoading, videoError]);
 
   const { data: commentsData, loading: commentsLoading, fetchMore, refetch: refetchComments } = useQuery(
     GetVideoCommentsDocument,
@@ -45,7 +57,6 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
   if (!videoData && !videoError) {
     return (
       <PageWithRefresh onRefresh={handleRefresh}>
-        <BackLink />
         <VideoDetailSkeleton />
       </PageWithRefresh>
     );
@@ -56,7 +67,6 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
       <ErrorPage
         title="動画が見つかりません"
         description={videoError.message}
-        backLink={<BackLink />}
       />
     );
   }
@@ -76,7 +86,6 @@ export default function MoviePage({ params }: { params: Promise<{ id: string }> 
 
   return (
     <PageWithRefresh onRefresh={handleRefresh}>
-      <BackLink />
       <div className="flex flex-col lg:flex-row gap-8">
         {video && <VideoDetails video={video} />}
         <aside className="lg:w-96 bg-surface border border-border rounded-lg p-6 shadow-sm">

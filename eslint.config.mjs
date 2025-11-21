@@ -44,6 +44,11 @@ export default [
       'react/prop-types': 'off',
       'react-hooks/set-state-in-effect': 'off',
       '@next/next/no-img-element': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
     },
     settings: {
       react: {
